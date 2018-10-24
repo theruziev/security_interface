@@ -1,0 +1,30 @@
+language: python
+cache: pip
+
+install:
+  - pip install tox
+
+
+jobs:
+  include:
+    - stage: syntax
+      script: tox
+      python: 3.6
+      env: TOXENV=syntax
+
+
+    - stage: test
+      script: tox
+      env: TOXENV=py37,codecov
+      python: 3.6
+
+    - stage: syntax
+      script: tox
+      python: 3.7
+      env: TOXENV=syntax
+
+
+    - stage: test
+      script: tox
+      env: TOXENV=py37,codecov
+      python: 3.7
