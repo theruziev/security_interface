@@ -48,10 +48,22 @@ async def test_identify(make_token):
 
     identity = await security.identify(token)
     assert "Bakhtiyor" == identity["login"]
+
     assert await security.can(token, "read")
     assert await security.can(token, "write")
     assert await security.can(token, "private")
     assert not await security.can(token, "non_exist_in_scope")
+
+    try:
+        await security.check_permission(token, "read")
+        await security.check_permission(token, "write")
+        await security.check_permission(token, "private")
+    except ForbiddenError as e:
+        assert False, str(e)
+
+    with pytest.raises(ForbiddenError):
+        await security.check_permission(token, "non_exist_in_scope")
+
     assert "Bakhtiyor" == (await security.check_authorized(token))["login"]
 
     #  Wrong cases

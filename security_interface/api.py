@@ -36,8 +36,8 @@ class Security:
             raise UnauthorizedError()
         return identify
 
-    async def check_permission(self, request, permission):
-        await self.check_authorized(request)
-        allowed = await self.can(request, permission)
+    async def check_permission(self, identity, permission):
+        await self.check_authorized(identity)
+        allowed = await self.can(identity, permission)
         if not allowed:
             raise ForbiddenError()
