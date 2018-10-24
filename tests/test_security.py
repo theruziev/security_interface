@@ -63,3 +63,7 @@ async def test_identify(make_token):
 
     with pytest.raises(ForbiddenError):
         await security.check_permission(token, "non_exist_in_scope")
+
+    # Test Anonymous
+    assert await security.is_anonymous(None)
+    assert not await security.is_anonymous(token)
