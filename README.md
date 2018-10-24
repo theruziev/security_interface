@@ -1,0 +1,1 @@
+# Security Interface [![https://travis-ci.com/](https://travis-ci.com/bruziev/security_interface.svg?branch=master)](https://travis-ci.com/bruziev/security_interface)
