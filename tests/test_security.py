@@ -1,5 +1,4 @@
 import logging
-import jwt
 import pytest
 
 from security_interface import AuthorizationPolicyInterface, IdentityPolicyInterface
@@ -9,20 +8,9 @@ from security_interface.exceptions import ForbiddenError, UnauthorizedError
 SECRET = "secret"
 
 
-class JWTIdentityPolicy(IdentityPolicyInterface):
-    def __init__(self, secret, algorithm="HS256"):
-        if jwt is None:
-            raise RuntimeError("Please install `PyJWT`")
-        self.secret = secret
-        self.algorithm = algorithm
-
+class TestIdentityPolicy(IdentityPolicyInterface):
     async def identify(self, identity):
-        try:
-            identity = jwt.decode(identity, self.secret, algorithms=[self.algorithm])
-            return identity
-        except Exception as e:
-            logging.error("Error during read identity: {}".format(e))
-            return None
+        return identity
 
 
 class Autz(AuthorizationPolicyInterface):
@@ -30,52 +18,41 @@ class Autz(AuthorizationPolicyInterface):
         return permission in identity["scope"]
 
 
-@pytest.fixture
-def make_token():
-    def factory(payload, secret):
-        return jwt.encode(payload, secret, algorithm="HS256")
-
-    return factory
-
-
-security = Security(JWTIdentityPolicy(secret=SECRET), Autz())
+security = Security(TestIdentityPolicy(), Autz())
 
 
 @pytest.mark.asyncio
-async def test_identify(make_token):
+async def test_identify():
     identity_raw = {"login": "Bakhtiyor", "scope": ["read", "write", "private"]}
-    token = make_token(identity_raw, SECRET)
 
-    identity = await security.identify(token)
+    identity = await security.identify(identity_raw)
     assert "Bakhtiyor" == identity["login"]
 
-    assert await security.can(token, "read")
-    assert await security.can(token, "write")
-    assert await security.can(token, "private")
-    assert not await security.can(token, "non_exist_in_scope")
+    assert await security.can(identity_raw, "read")
+    assert await security.can(identity_raw, "write")
+    assert await security.can(identity_raw, "private")
+    assert not await security.can(identity_raw, "non_exist_in_scope")
 
     try:
-        await security.check_permission(token, "read")
-        await security.check_permission(token, "write")
-        await security.check_permission(token, "private")
+        await security.check_permission(identity_raw, "read")
+        await security.check_permission(identity_raw, "write")
+        await security.check_permission(identity_raw, "private")
     except ForbiddenError as e:
         assert False, str(e)
 
     with pytest.raises(ForbiddenError):
-        await security.check_permission(token, "non_exist_in_scope")
+        await security.check_permission(identity_raw, "non_exist_in_scope")
 
-    assert "Bakhtiyor" == (await security.check_authorized(token))["login"]
+    assert "Bakhtiyor" == (await security.check_authorized(identity_raw))["login"]
 
-    #  Wrong cases
-    wrong_token = make_token(identity_raw, "WRONG_SECRET")
-
+    # Wrong cases
     with pytest.raises(UnauthorizedError):
-        await security.check_authorized(wrong_token)
-        await security.check_permission(wrong_token, "read")
+        await security.check_authorized(None)
+        await security.check_permission(None, "read")
 
     with pytest.raises(ForbiddenError):
-        await security.check_permission(token, "non_exist_in_scope")
+        await security.check_permission(identity_raw, "non_exist_in_scope")
 
     # Test Anonymous
     assert await security.is_anonymous(None)
-    assert not await security.is_anonymous(token)
+    assert not await security.is_anonymous(identity_raw)
