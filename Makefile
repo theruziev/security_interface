@@ -5,7 +5,7 @@ lint:
 	pipenv run black -l 100 --check tests security_interface
 
 format:
-	pipenv run black -l 100 tests/ security_interface/
+	pipenv run black -l 100 tests/ security_interface/ demo/
 
 install-dev:
 	pipenv install --skip-lock -d
