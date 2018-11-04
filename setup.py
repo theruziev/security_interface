@@ -1,12 +1,12 @@
 import setuptools
 from setuptools import setup
-from security_interface.version import __version__
+from security_interface._version import __version__
 
 setup(
     name='security_interface',
     version=__version__,
     url='https://github.com/bruziev/security_interface',
-    license='BSD',
+    license='MIT',
     author='Bakhtiyor Ruziev',
     author_email='bakhtiyor.ruziev@yandex.ru',
     description='Security Interface for you project.',
