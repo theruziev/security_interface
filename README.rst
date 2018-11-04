@@ -4,8 +4,8 @@
         :target: https://codecov.io/gh/bruziev/security_interface
 
 
-Welcome to Security Interface's documentation!
-==============================================
+Security Interface
+==================
 
 This library provides easy API for authentication and authorization.
 
@@ -20,8 +20,8 @@ Install with the following command::
 Usage
 -----
 
-First of all you need implement :func:`IdentityPolicyInterface`
-and  :func:`AuthorizationPolicyInterface` interfaces. For example we can implement JWT Security::
+First of all you need implement ``IdentityPolicyInterface``
+and ``AuthorizationPolicyInterface`` interfaces. For example we can implement JWT Security::
 
    import jwt
    from security_interface import IdentityPolicyInterface, AuthorizationPolicyInterface
