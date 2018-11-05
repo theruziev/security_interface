@@ -13,11 +13,11 @@ class Security:
 
     async def identify(self, identity):
         """
-        Return the claimed identity of the user associated request or
-        ``None`` if no identity can be found associated with the request.
+        Return the claimed identity or
+        ``None`` if check is failed.
 
         :param identity: Claim
-        :return: Return checked identity or ``None`` if check is failed.
+        :return: Checked identity or ``None`` if check is failed.
         """
         identify = await self.identity_policy.identify(identity)
         return identify
@@ -26,7 +26,7 @@ class Security:
         """
         Check user permissions.
 
-        :return: Return ``True`` if the identity is allowed the permission, else return ``False``.
+        :return: ``True`` if the identity is allowed the permission, else return ``False``.
         """
         assert isinstance(permission, (str, enum.Enum)), permission
         assert permission
@@ -39,7 +39,7 @@ class Security:
         """
 
         :param identity: Claim
-        :return: Return ``True`` if user anonymous otherwise ``False``
+        :return: ``True`` if user anonymous otherwise ``False``
         """
         identify = await self.identity_policy.identify(identity)
         if identify is None:
@@ -48,8 +48,8 @@ class Security:
 
     async def check_authorized(self, identity):
         """
-        Work like :func:`Security.identity` but when check is failed
-        raise :func:`UnauthorizedError` exception.
+        Works like :func:`Security.identity`, but when check is failed
+        :func:`UnauthorizedError` exception is raised.
 
         :param identity: Claim
         :return: Checked claim or return ``None``
@@ -62,8 +62,8 @@ class Security:
 
     async def check_permission(self, identity, permission):
         """
-        Work like :func:`Security.can` but when check is failed
-        raise :func:`ForbiddenError` exception.
+        Works like :func:`Security.can`, but when check is failed
+        :func:`ForbiddenError` exception is raised.
 
         :param identity: Claim
         :param permission: Permission
