@@ -9,7 +9,7 @@
 Security Interface
 ==================
 
-This library provides easy API for authentication and authorization.
+This library provides an easy API for authentication and authorization.
 
 Installation
 ------------
@@ -22,8 +22,8 @@ Install with the following command::
 Usage
 -----
 
-First of all you need implement ``IdentityPolicyInterface``
-and ``AuthorizationPolicyInterface`` interfaces. For example we can implement JWT Security::
+First of all you need to implement ``IdentityPolicyInterface``
+and ``AuthorizationPolicyInterface`` interfaces. For example, we can implement JWT Security::
 
    import jwt
    from security_interface import IdentityPolicyInterface, AuthorizationPolicyInterface
