@@ -5,11 +5,11 @@ class IdentityPolicyInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def identify(self, identity):
         """
-        Return the claimed identity of the user associated request or
-        ``None`` if no identity can be found associated with the request.
+        You need return the checked claimed identity or
+        ``None`` if check is fail.
 
         :param identity: Claim
-        :return: Return checked identity or ``None`` if check is failed.
+        :return: Checked ``identity`` or ``None`` if check is failed.
         """
         pass  # pragma: no cover
 
@@ -18,8 +18,8 @@ class AuthorizationPolicyInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def can(self, identity, permission):
         """
-        Check user permissions.
+        You need to implement checking permission.
 
-        :return: Return ``True`` if the identity is allowed the permission, else return ``False``.
+        :return: ``True`` if the identity is allowed the permission, else return ``False``.
         """
         pass  # pragma: no cover
