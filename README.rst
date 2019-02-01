@@ -14,16 +14,20 @@ This library provides an easy API for authentication and authorization.
 Installation
 ------------
 
-Install with the following command::
+Install with the following command
 
-    $ pip install security_interface
+.. code-block:: bash
+
+    pip install security_interface
 
 
 Usage
 -----
 
 First of all you need to implement ``IdentityPolicyInterface``
-and ``AuthorizationPolicyInterface`` interfaces. For example, we can implement JWT Security::
+and ``AuthorizationPolicyInterface`` interfaces. For example, we can implement JWT Security
+
+.. code-block:: python
 
    import jwt
    from security_interface import IdentityPolicyInterface, AuthorizationPolicyInterface
@@ -53,7 +57,9 @@ and ``AuthorizationPolicyInterface`` interfaces. For example, we can implement J
 
 Create security instance with our implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+
+.. code-block:: python
+
 
    from security_interface.api import Security
    jwt_identity = JwtIdentityPolicy("SECRET")
