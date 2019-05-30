@@ -1,7 +1,7 @@
-.. image:: https://img.shields.io/travis/com/bruziev/security_interface.svg?style=flat-square
-        :target: https://travis-ci.com/bruziev/security_interface
-.. image:: https://img.shields.io/codecov/c/github/bruziev/security_interface.svg?style=flat-square
-        :target: https://codecov.io/gh/bruziev/security_interface
+.. image:: https://img.shields.io/travis/com/theruziev/security_interface.svg?style=flat-square
+        :target: https://travis-ci.com/theruziev/security_interface
+.. image:: https://img.shields.io/codecov/c/github/theruziev/security_interface.svg?style=flat-square
+        :target: https://codecov.io/gh/theruziev/security_interface
 .. image:: https://img.shields.io/pypi/v/security_interface.svg?style=flat-square
         :alt: PyPI
         :target: https://pypi.org/project/security-interface/
